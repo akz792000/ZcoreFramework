@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns="http://www.zcoreframework.org/schema/bpm" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
+	targetNamespace="http://www.zcoreframework.org/schema/bpm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans.xsd" />
+
+	<xsd:element name="context">
+		<xsd:complexType>
+			<xsd:attribute name="databaseSchemaUpdate" type="xsd:boolean" default="false" />
+            <xsd:attribute name="databaseTablePrefix" type="xsd:string" default="" />
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

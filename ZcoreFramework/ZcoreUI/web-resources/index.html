@@ -1,0 +1,216 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+	
+    <!--  
+	    ******* 
+	    * CSS *
+	    *******	
+    --> 
+    <script type="text/javascript">
+    var link = document.createElement("link");
+    link.id = 'stylesheet-jqueryui';
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href = 'resources/jquery/themes/:theme/jquery-ui.min.css'.replace(':theme', function() {
+		var keyValue = document.cookie.match('(^|;) ?' + 'ztheme' + '=([^;]*)(;|$)');  
+		return keyValue ? keyValue[2] : 'redmond'; 
+	})
+    document.getElementsByTagName("head")[0].appendChild(link);
+    </script>	     
+	<link id="stylesheet-ui" rel="stylesheet" type="text/css" href="resources/css/redmond/core.css"/>	
+
+    <!--  
+	    ********** 
+	    * jQuery *
+	    **********
+    -->
+    <script type="text/javascript" src="resources/jquery/jquery.min.js"></script>
+    
+	<!--  
+	    ************* 
+	    * jQuery UI *
+	    *************
+    -->    	
+	<script type="text/javascript" src="resources/jquery/jquery-ui.min.js"></script>
+	
+    <!--  
+	    ********* 
+	    * ZCore *
+	    *********	
+    -->
+    
+    <!-- calendar -->  
+    <script src="resources/zcore/util/calendar/jquery.calendars.min.js"></script>
+    <script src="resources/zcore/util/calendar/jquery.calendars.plus.min.js"></script>
+    <script src="resources/zcore/util/calendar/jquery.calendars.persian.min.js"></script>
+    <script src="resources/zcore/util/calendar/jquery.calendars.persian-fa.min.js"></script>
+    
+    <!-- contextmenu -->
+    <link rel="stylesheet" type="text/css" href="resources/zcore/util/contextmenu/jquery.contextmenu.css"/>
+	<script src="resources/zcore/util/contextmenu/jquery.contextmenu.js"></script>	
+	
+	<!-- critical -->	
+	<script src="resources/zcore/util/zcore.json.js"></script>		
+	<script src="resources/zcore/util/zcore.validation.js"></script>	
+	<script src="resources/zcore/util/zcore.browser.js"></script>		
+	<script src="resources/zcore/util/zcore.mask.js"></script>
+	<script src="resources/zcore/util/zcore.clock.js"></script>
+	<script src="resources/zcore/util/zcore.cookie.js"></script>	
+	<script src="resources/zcore/util/stomp.js"></script>						
+	
+	<!-- core resource -->
+	<script src="resources/zcore/run/core/zcore.object.factory.js"></script>
+	<script src="resources/zcore/run/core/zcore.object.js"></script>
+	<script src="resources/zcore/run/core/zcore.action.js"></script>
+	<script src="resources/zcore/run/core/zcore.method.js"></script>
+	<script src="resources/zcore/run/core/zcore.property.js"></script>
+	<script src="resources/zcore/run/core/zcore.component.js"></script>		
+	<script src="resources/zcore/run/core/zcore.postable.js"></script>	
+	
+	<!-- friend resource -->
+	<script src="resources/zcore/run/friend/zcore.mask.js"></script>
+	<script src="resources/zcore/run/friend/zcore.ajax.js"></script>
+	<script src="resources/zcore/run/friend/zcore.lov.js"></script>
+	<script src="resources/zcore/run/friend/zcore.modal.js"></script>
+	<script src="resources/zcore/run/friend/zcore.date.js"></script>
+	<script src="resources/zcore/run/friend/zcore.table.js"></script>
+	
+	<!-- simple component -->
+	<script src="resources/zcore/run/zcore.label.js"></script>
+	<script src="resources/zcore/run/zcore.input.js"></script>	
+	<script src="resources/zcore/run/zcore.text.js"></script>
+	<script src="resources/zcore/run/zcore.textbtn.js"></script>	
+	<script src="resources/zcore/run/zcore.textlabel.js"></script>
+	<script src="resources/zcore/run/zcore.hidden.js"></script>
+	<script src="resources/zcore/run/zcore.password.js"></script>
+	<script src="resources/zcore/run/zcore.textarea.js"></script>	
+	<script src="resources/zcore/run/zcore.bpmn.js"></script>	
+	<script src="resources/zcore/run/zcore.button.js"></script>
+	<script src="resources/zcore/run/zcore.panel.js"></script>
+	<script src="resources/zcore/run/zcore.image.js"></script>
+	<script src="resources/zcore/run/zcore.accordion.js"></script>	
+	<script src="resources/zcore/run/zcore.accordionPage.js"></script>			
+	<script src="resources/zcore/run/zcore.tab.js"></script>	
+	<script src="resources/zcore/run/zcore.tabPage.js"></script>		
+	<script src="resources/zcore/run/zcore.view.js"></script>
+	<script src="resources/zcore/run/zcore.checkbox.js"></script>
+	<script src="resources/zcore/run/zcore.toggle.js"></script>	
+	<script src="resources/zcore/run/zcore.file.js"></script>
+	<script src="resources/zcore/run/zcore.iframe.js"></script>	
+	<script src="resources/zcore/run/zcore.progressBar.js"></script>
+	
+	<!-- ajax component -->
+	<script src="resources/zcore/run/ajax/zcore.captcha.js"></script>
+	<script src="resources/zcore/run/ajax/zcore.menu.js"></script>
+	<script src="resources/zcore/run/ajax/zcore.buttonset.js"></script>
+	<script src="resources/zcore/run/ajax/zcore.multiselect.js"></script>
+	<script src="resources/zcore/run/ajax/zcore.chosen.js"></script>	
+	<script src="resources/zcore/run/ajax/zcore.calendar.js"></script>
+	<script src="resources/zcore/run/ajax/zcore.datetime.js"></script>
+	<script src="resources/zcore/run/ajax/zcore.tree.js"></script>
+	<script src="resources/zcore/run/ajax/zcore.lovtree.js"></script>
+	<script src="resources/zcore/run/ajax/zcore.grid.js"></script>
+	<script src="resources/zcore/run/ajax/zcore.lovgrid.js"></script>
+	
+	<!-- zcore invoker -->	
+	<script src="resources/zcore/invoker/zcore.grid.js"></script>
+	<script src="resources/zcore/invoker/zcore.tree.js"></script>		
+		
+	<!-- helper -->
+	<script src="resources/zcore/helper/zcore.message.js"></script>
+	<script src="resources/zcore/helper/zcore.loading.js"></script>
+	<script src="resources/zcore/helper/zcore.box.js"></script>
+	<script src="resources/zcore/helper/zcore.bar.js"></script>
+	<script src="resources/zcore/helper/zcore.hint.js"></script>
+	<script src="resources/zcore/helper/zcore.dialog.js"></script>
+	<script src="resources/zcore/helper/zcore.download.js"></script>			
+	
+	<!-- app -->
+	<script src="resources/zcore/zcore.app.js"></script>
+	
+	<!-- common -->
+	<script src="resources/zcore/zcore.common.js"></script>
+	
+</head>
+<body>
+	<script type="text/javascript">
+	$(function() {
+		// initialize app
+		$.ZAP.initial({
+			version : new Date().getTime(),
+			locale : {
+				cookie : 'zlang'
+			},
+			config : {
+				theme : $.ZCK.cookieObject({
+					cookie : 'ztheme',
+					def : 'redmond',
+					after : function(v) {
+						$('#stylesheet-jqueryui').attr('href', 'resources/jquery/themes/' + this.value + '/jquery-ui.min.css'.replace(':cookie', this.value));
+					}
+				}),	
+				index : function() {
+					$.ZAP.loadView({
+						ui : '/core/view/PL/layout',
+						service : '/core/service/PL_baseData/param'
+					});
+				},
+				login : function() {
+					$.ZAP.loadView({
+						ui : '/core/view/PL/security/login',
+						dialog : {
+							width : 360,
+							dialogClass : 'ui-state-default zui-login',
+							draggable : false,
+							title : $.ZAP.message.msg('Logo title'),
+							closeOnEscape : false,
+							closeButton : false
+						}
+					});	
+				},
+				logout : function() {
+					$.ZAP.call({
+						service : '/core/service/PL_security-authentication/logout',	
+						dataType : "xml",
+						success : function() {				  
+							$.ZAP.removeView();	
+							$.ZAP.config.login();						
+						}
+					});
+				},
+				security : function(state, title) {
+					var view = "password";
+					//--> set view
+					if (state == "SECURITY_USER_MULTI_ORGANIZATIONAL") {
+						view = "organization";
+					}
+					$.ZAP.loadView({
+						ui : {
+							url : '/core/view/PL/security/' + view,
+							param : {
+								state : state
+							}
+						},
+						service : '/core/service/PL_security-:view/param'.replace(':view', view),
+						dialog : {
+							dialogClass : 'ui-state-default',
+							title : title || $.ZAP.message.msg(state),
+							width : 300,
+							closeOnEscape : false,
+							closeButton : false
+						}
+					});					
+				}				
+			}
+		});
+	
+		// go to index page
+		$.ZAP.config.index();
+	});	
+	</script>
+</body>
+</html> 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress UnparsedCustomBeanInspection-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:base="http://www.zcoreframework.org/schema/base"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                                 http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                                 http://www.zcoreframework.org/schema/base
+                                 http://www.zcoreframework.org/schema/base/zcore-base.xsd">
+
+    <!-- base context -->
+    <base:data-access/>
+
+    <!-- base configuration -->
+    <base:context/>
+
+    <!-- imports -->
+    <import resource="classpath:META-INF/zcore.batch/batchContext.xml"/>
+    <import resource="classpath:META-INF/batchJobs.xml"/>
+
+    <!-- For connecting unit tests to oracle database, comment this and configure 'config.properties' file -->
+    <import resource="classpath:META-INF/h2Config.xml"/>
+
+</beans>

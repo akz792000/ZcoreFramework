@@ -1,0 +1,29 @@
+1.Right click ZcoreProject -> team -> share project
+2.check src
+3.check all project's (src and pom.xml)
+4.check pom.xml
+5.commit
+5.add all target folder & .classpath & .project for each project to svn:ignore
+6.after this for each one of the project -> team and connect to svn
+7.if you can not commit ZcoreProject at the final first update from svn and then commit again
+
+
+
+beware that there is no .svn folder in the project
+
+1.right click on project
+2.select team shared project
+3.chose svn
+4.use existing repository location
+5.enter proper url and next
+https://tls.navaco.local/svn/zcore/ZcoreProject/ZcoreValidation
+6.when commit dialog present right click on resources to add to svn:ignore 
+.settings
+.classpath
+.project
+7.enter cancel button
+8.ensure all desire file selected and others deselected
+9.right click on project
+10.select team commit
+11.ensure all desire file selected 
+12.commit and check in svn repository existing

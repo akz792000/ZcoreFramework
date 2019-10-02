@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns="http://www.zcoreframework.org/schema/base" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:beans="http://www.springframework.org/schema/beans"
+            targetNamespace="http://www.zcoreframework.org/schema/base" elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.springframework.org/schema/beans"
+                schemaLocation="http://www.springframework.org/schema/beans/spring-beans.xsd"/>
+
+    <xsd:element name="context"/>
+
+    <xsd:element name="data-access"/>
+
+    <xsd:element name="message-source">
+        <xsd:complexType>
+            <xsd:attribute name="location" use="required" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="service"/>
+
+    <xsd:element name="gateway"/>
+
+    <xsd:element name="transaction-template">
+        <xsd:complexType>
+            <xsd:attribute name="propagation" use="required">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="REQUIRES_NEW"/>
+                        <xsd:enumeration value="REQUIRED"/>
+                        <xsd:enumeration value="NESTED"/>
+                        <xsd:enumeration value="MANDATORY"/>
+                        <xsd:enumeration value="NEVER"/>
+                        <xsd:enumeration value="SUPPORTS"/>
+                        <xsd:enumeration value="NOT_SUPPORTED"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

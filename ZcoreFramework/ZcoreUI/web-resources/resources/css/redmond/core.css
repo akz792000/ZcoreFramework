@@ -1,0 +1,310 @@
+/**
+ * 
+ * @author Ali Karimizandi
+ * @since 2012-2014 
+ * @version 1.0
+ *  
+ */
+
+* {margin: 0; font-family: tahoma, arial, helvetica, sans-serif !important; }
+
+/* select item stop being focused when click on body */
+* {-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: -moz-none; -o-user-select: none; user-select: none;}
+input {-webkit-user-select: text; -khtml-user-select: text; -moz-user-select: text; -o-user-select: text; user-select: text;}
+textarea {-webkit-user-select: text; -khtml-user-select: text; -moz-user-select: text; -o-user-select: text; user-select: text;}
+
+/* a */
+a, a:hover, a:visited, a:focus {
+	/* for remove firefox dotted outline of a */
+	border: 0; outline: 0; text-decoration: none;
+}
+
+/* span */
+span, span:hover, span:visited, span:focus {	
+	outline: 0;
+}
+	
+/* for remove Firefox's dotted outline on BUTTONS as well as links in multiselect we have button */
+button::-moz-focus-inner { border: 0; }
+
+.circle {background-position: center center; background-repeat: no-repeat; border-radius: 50%;}
+	
+/*
+ * jQuery UI override
+ */
+.ui-autocomplete {max-height: 100px; overflow-y: auto; /* prevent horizontal scrollbar */ overflow-x: hidden;font-size: 11px;}
+ 
+.ui-tooltip {font-size: 11px;} 
+ 
+.ui-tabs .ui-tabs-panel {padding: 0.3em 0;}
+.ui-tabs .ui-tabs-nav {padding: 0.1em 0.1em 0}
+.ui-tabs .ui-tabs-nav li a {padding: 0.4em }
+
+.ui-resizable-n {height: 4px; top: 0px;}
+.ui-resizable-s {height: 4px; bottom: 0px;}
+.ui-resizable-e {width: 4px; right: 0px;}
+.ui-resizable-w {width: 4px; left: 0px;}
+
+/* override right attribute and set new value for left */
+.ui-dialog .ui-dialog-titlebar-close {left: 4px; right: auto;}
+.ui-dialog .ui-dialog-title {float: none !important; display: block; text-align: center; width: 100%;}
+.ui-dialog .ui-resizable-se {bottom: 0px; height: 6px; right: 0px; width: 6px;}
+.ui-dialog .ui-resizable-sw {bottom: 0px; height: 6px; left: 0px; width: 6px;}
+.ui-dialog .ui-resizable-ne {height: 6px; right: 0px; top: 0px; width: 6px;}
+.ui-dialog .ui-resizable-nw {height: 6px; left: 0px; top: 0px; width: 6px;}
+
+.ui-dialog .ui-dialog-buttonpane {text-align: center;}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {float: none;}
+
+.ui-button {margin: 0px;}
+.ui-buttonset .ui-button {margin-left: 0; margin-right: 0;}
+.ui-buttonset {margin: 0px;}	
+.ui-button-text-icon-primary .ui-button-icon-primary, .ui-button-text-icons .ui-button-icon-primary, .ui-button-icons-only .ui-button-icon-primary {left: 0.3em;}
+.ui-button-text-icon-secondary .ui-button-icon-secondary, .ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary {right: 0.3em;}
+
+.ui-selectable-helper {z-index: 10000;}
+.ui-state-disabled {opacity: 0.85 !important}
+.ui-widget-overlay{background:#aaa 50% 50% repeat-x;opacity:.3;filter:Alpha(Opacity=30);}
+.ui-accordion .ui-accordion-content {overflow: inherit;	padding: 1px;}
+
+/*
+ * zui css global
+ */
+.zui-login .ui-dialog-titlebar {
+	background-image: url(../images/maskan.png);
+	background-repeat: no-repeat;
+	background-size: 24px 24px;
+	background-position: calc(100% - 4px);	
+}	 
+.zui-cursor {cursor: pointer;} 
+.zui-button-inline {display: inline-block;}
+.zui-state-hidden {display: none !important;}
+
+.zui-centeralize {
+  /* vertically align */	
+  position: relative; top: 50% !important; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%);  
+  /* horizontally align */
+  display: block; margin-left: auto !important;; margin-right: auto !important;;
+}
+.zui-centeralize-h {display: block; margin-left: auto !important; margin-right: auto !important;}
+.zui-centeralize-v {position: relative; top: 50% !important; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%);}
+.zui-center-v {position: absolute; top: 50% !important; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%);}
+
+.zui-align-client {height: 100% !important; width: 100% !important;} 
+
+.zui-state-hover {opacity: 1 !important; moz-box-shadow: inset 0 0 1px #1CA4E8 !important;	-webkit-box-shadow: inset 0 0 1px #1CA4E8 !important; box-shadow: inset 0 0 1px #1CA4E8 !important; border-color: #1CA4E8 !important;}
+.zui-state-disabled {}
+.zui-state-focused-disabled {background-color: #f3f3f3!important;}
+
+.zui-border-style {	border: 1px solid #a6c9e2 !important;}
+.zui-without-border {border: 0px !important;}
+.zui-widget-content {background: #f5f8f9;}
+.zui-without-content {background: none !important;}
+
+.zui-hover {z-index: 999; -moz-box-shadow: 0 0 1px 1px black; -webkit-box-shadow: 0 0 1px 1px black; box-shadow: 0 0 1px 1px black;}
+.zui-hover-cursor {cursor: pointer;}
+
+/* 
+ * zui helper 
+ */
+ 
+/* zui-loading */ 
+.zui-loading {position : absolute; opacity: .6; filter: Alpha(Opacity=6); background: no-repeat center rgb(240,240,240); z-index: 10000;}
+.zui-loading-image-16 {background-image: url(../images/loading/preload-16.gif); background-color: white;}
+.zui-loading-image-32 {background-image: url(../images/loading/preload-32.gif);}
+.zui-loading-image-48 {background-image: url(../images/loading/preload-48.gif);}
+.zui-loading-image-64 {background-image: url(../images/loading/preload-64.gif);}
+.zui-loading-image-128 {background-image: url(../images/loading/preload-128.gif);}
+
+/* zui-hint */
+.zui-hint {display: none; position: absolute; -moz-border-radius: 5px; -webkit-border-radius: 5px; z-index: 10000; max-width: 400px;}
+.zui-hint span {position: absolute; top: -10px;}
+.zui-hint div {padding: 10px;}
+
+/* zui-bar */
+.zui-bar {display: none; position: absolute; border-right: 0px !important; border-left: 0px !important; width: 100%; z-index: 10000; height: 32px;}
+.zui-bar div {position: absolute; top: 8px;}
+.zui-bar p {padding-top: 8px;}
+.zui-bar-success {background: none repeat scroll 0 0 #E6F7E6; border: 1px solid #7A997A; color: black;}
+.zui-bar-error {background: none repeat-x scroll 50% 50% #fef1ec; border: 1px solid #cd0a0a; color: black;}
+
+/*
+ *  zcore component
+ */
+ 
+/* zui-component */
+.zui-global {font-size : 11px;}
+.zui-component {outline: none;/* focus dotted */; position: relative;}
+
+/* zui component global */
+.zui-text-content {background: url(../images/input.gif) #FFFFFF repeat-x scroll 0pt 0pt; transform: translateY(0)}
+.zui-text-sizing {box-sizing: border-box; -ms-box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; text-indent: 4px;}
+ 
+/* zui-label */
+.zui-label {font-weight: bold;}
+.zui-label div {position:absolute; background: none !important; border: none !important;}
+.zui-label-rtl label {margin-right: 8px; white-space: nowrap;}
+.zui-label-ltr label {margin-left: 8px; white-space: nowrap;}
+
+/* zui-input */
+.zui-input {width: 100%; height: 24px;}
+
+/* zui-text */
+.zui-text {width: 100%; height: 24px;}
+
+/* zui-textlabel */
+.zui-textlabel {height: 24px; width: 100%;}
+.zui-textlabel input {height: 100%; width: 100%; margin: auto;}
+.zui-textlabel label {font-weight: bold; white-space: nowrap;}
+.zui-textlabel-rtl label {float: left; left: 4px;}
+.zui-textlabel-ltr label {float: right; right: 4px;}
+
+/* zui-textbtn */
+.zui-textbtn {width: 100%; height: 24px;}
+.zui-textbtn input {height: 100%; width: 100%;}
+.zui-textbtn button {height: 18px; width: 18px;}
+.zui-textbtn button .ui-button-icon-primary {left: 0;}
+.zui-textbtn-ltr button {right: 0; margin-right: 0.3em;}
+.zui-textbtn-rtl button {left: 0; margin-left: 0.3em;}
+
+/* zui-password */
+.zui-password {width: 100%; height: 24px;}
+
+/* zui-textarea */
+.zui-textarea {width: 100%; height: 58px; resize: none;}
+
+/* zui-button */
+.zui-button {height: 24px;}
+.zui-button .ui-button-text {padding-top: 0.3em;} 
+
+/* zui-bpmn */
+.djs-cursor-move .zui-bpmn {cursor: grabbing;}
+.djs-container .highlight .djs-outline {stroke-width: 2px !important; /*stroke: #08c !important; fill: #bce2f5 !important;*/}
+.djs-container .highlight .djs-visual>:nth-child(1) {fill: #bce2f5 !important;}
+.zui-bpmn {direction: ltr; overflow: auto; height: 100%; overflow: hidden; width: 100%; cursor: grab;}
+.zui-bpmn * {font-weight: normal;}
+.zui-bpmn .zui-bpmn-btn {position: absolute; height: 26px; width: 26px; vertical-align: middle; right: 8px;}
+.zui-bpmn .zui-bpmn-btn.zui-bpmn-btn-reset {top: 8px;}
+.zui-bpmn .zui-bpmn-btn.zui-bpmn-btn-in {top: 48px;}
+.zui-bpmn .zui-bpmn-btn.zui-bpmn-btn-out {top: 74px;} 
+
+/* zui-file */
+.zui-file {width: 100%; height: 24px;}
+.zui-file input {width: 100%; height: 100%; margin-left: auto; margin-right: auto;}
+.zui-file button {height: 18px; width: 18px;}
+.zui-file button .ui-button-icon-primary {left: 0;}
+.zui-file-ltr button {right: 0; margin-right: 0.3em;}
+.zui-file-rtl button {left: 0; margin-left: 0.3em;}
+
+/* zui-panel */
+.zui-panel {display: block; color: #222222; padding: 0px;}
+.zui-panel-collapsed {background-color: transparent !important; border-left-color: transparent !important; border-right-color: transparent !important; border-width: 1px 1px 0 !important; padding-bottom: 0 !important;}
+.zui-panel-header {height: 16px; padding-left:4px; padding-right:16px; position:relative; background: none !important;}
+.zui-panel-header span {position: absolute; right: 0px;}
+.zui-panel-header label {color: black; font-weight: bold;}
+.zui-panel-content {width: 100%; height: 100%;}
+.zui-panel-table {width: 100%; border-collapse: collapse;}
+.zui-panel-tr {width: 100%; padding: 0px;}
+.zui-panel-td {vertical-align: top; padding: 1px 4px; vertical-align: middle;}
+.zui-panel-td.zui-fixed {padding: 0px;}
+.zui-panel-legend {padding-bottom: 8px;}
+
+/* zui-captcha */
+.zui-captcha {width: 100%;}
+.zui-captcha img {width: calc(100% - 2px); height: 60px; border: 1px solid #a6c9e2;}
+.zui-captcha ul {width: 100%; margin: 0; padding: 0; list-style-type: none; }
+.zui-captcha li {width: 100%; position: relative;}
+.zui-captcha input {height: 24px; width: 100%;}
+.zui-captcha button {height: 18px; width: 18px;}
+.zui-captcha button .ui-button-icon-primary {left: 0;}
+.zui-captcha-ltr button {right: 0; margin-right: 0.3em;}
+.zui-captcha-rtl button {left: 0; margin-left: 0.3em;}
+
+/* zui-menu */
+.zui-menu {width: auto;}
+
+/* zui-accordion */
+.ui-accordion .ui-accordion-header {margin-top: 0px;}
+.zui-accordionPage {float: none;}
+.zui-accordion-ltr h3 {padding-left: 2.5em !important;}
+.zui-accordion-ltr h3 span {left: 0.5em}
+.zui-accordion-rtl h3 {padding-right: 2.5em !important;}
+.zui-accordion-rtl h3 span {right: 0.5em}
+
+/* zui-tab */
+.zui-tab-ltr .ui-tabs-nav li {float : left !important;}
+.zui-tab-rtl .ui-tabs-nav li {float : right !important;}
+
+/* zui-grid */
+.zui-grid {}
+
+/* zui-tree */
+#vakata-contextmenu {font-size: 11px;}
+.jstree { overflow: auto;}
+.zui-tree { background-repeat: no-repeat !important; height: calc(100% - 2px);}
+
+/* 
+ *	zui-calendar
+ *	width : 182 
+ *	img : outerWidth + margin.left + margin.right = 22
+ *	input : 182 - 22 = 160 = outerWidth
+ */
+.calendars * {font-size: 11px;}
+.zui-calendar {width: 100%; height: 24px;}
+.zui-calendar input {width:100%; height: 100%;}
+.zui-calendar-ltr .trigger {right: 0; margin-right: 0.3em;}
+.zui-calendar-rtl .trigger {left: 0; margin-left: 0.3em;}
+
+/* zui-datetime */
+.zui-datetime {width: 100%}
+.zui-datetime input {height: 24px; width: 100%;}
+.zui-datetime button {height: 18px; width: 18px;}
+.zui-datetime button .ui-button-icon-primary {left: 0;}
+.zui-datetime-ltr button {right: 0; margin-right: 0.3em;}
+.zui-datetime-rtl button {left: 0; margin-left: 0.3em;}
+
+/* 
+ *	zui-lov
+ *	width : 182
+ *	as same as calendar bu tdoes not precisely
+ */
+.zui-lov {width: 100%; height: 24px;}
+.zui-lov input {height: 100%; margin-left: auto; margin-right: auto;}
+.zui-lov button {height: 18px; width: 18px;}
+.zui-lov button .ui-button-icon-primary {left: 0;}
+.zui-lov-ltr button {right: 0; margin-right: 0.3em;}
+.zui-lov-rtl button {left: 0; margin-left: 0.3em;}
+
+/* zui-buttonset */
+.zui-buttonset {width: 100%;}
+.zui-buttonset label {height: 100%;}
+.zui-buttonset-ltr label {right: 0;}
+.zui-buttonset-rtl label {left: 0;}
+
+/* zui-multiselect */
+.zui-multiselect {width: 100%; height: 24px;}
+.zui-multiselect button {text-indent: 4px;}
+
+/* zui-chosen */
+.zui-chosen {width: 100%; height: 24px;}
+.zui-chosen input {height: 100%; margin-left: auto; margin-right: auto;}
+.zui-chosen .zui-chosen-div {height: 100%; margin-left: auto; margin-right: auto;}
+.zui-chosen-ltr .zui-chosen-div {float: right;}
+.zui-chosen-ltr .chosen-container-single .chosen-single div {right: 2px;}
+.zui-chosen-ltr .chosen-container-single .chosen-single abbr {right: 20px;}
+.chosen-search-ltr {background-position: left !important; padding: 4px 0px 4px 18px;} 
+.zui-chosen-rtl .zui-chosen-div {float: left;}
+.zui-chosen-rtl .chosen-container-single .chosen-single div {left: 2px;}
+.zui-chosen-rtl .chosen-container-single .chosen-single abbr {left: 20px;}
+.chosen-search-rtl {background-position: right !important;	padding: 4px 18px 4px 0px;}
+
+/* zui-checkbox */
+.zui-checkbox {height: 24px;}
+.zui-checkbox span {width: 16px; height: 16px;}
+.zui-checkbox-ltr label {left: 22px;}
+.zui-checkbox-rtl label {right: 22px;}
+
+/* zui-toggle */
+.zui-toggle {height: calc(24px - 2px);}
+.zui-toggle label {width: 100%; border-width: 0px !important; height: 100%}
+.zui-toggle label .ui-button-text {padding-top: 0.25em;} 

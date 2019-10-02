@@ -1,0 +1,68 @@
+/**
+ * 
+ * @author Ali Karimizandi
+ * @since 2012 
+ *   
+ */
+
+.ui-multiselect div {
+	margin: 0px; 
+	padding: 0px;
+    margin-top: -7px;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(100% - 24px);	
+}
+
+.ui-multiselect-button {width: 100%; height: 100%; overflow:auto;}
+
+/*
+ * ltr
+ */
+.ui-multiselect-ltr {direction: ltr; padding:2px; text-align:left }
+.ui-multiselect-menu-ltr {direction: ltr;}
+.ui-multiselect-ltr span.ui-icon { float:right }
+
+.ui-multiselect-header-ltr ul li { float:left; padding:0 4px 0 0 }
+.ui-multiselect-header-ltr span.ui-icon { float:left }
+.ui-multiselect-header-ltr li.ui-multiselect-close { float:right; text-align:right; padding-right:0 }
+
+/*
+ * rtl
+ */
+.ui-multiselect-rtl {direction: rtl; padding:2px; text-align: right; }
+.ui-multiselect-menu-rtl {direction: rtl;}
+.ui-multiselect-rtl span.ui-icon {position: absolute; left: 0.4em; top: 4px; float: right;}
+
+.ui-multiselect-header-rtl ul li { float:right; padding:0 4px 0 0 }
+.ui-multiselect-header-rtl span.ui-icon { float:right }
+.ui-multiselect-header-rtl li.ui-multiselect-close { float:left; text-align:left; padding-left:0;display:none}
+
+.ui-multiselect-single .ui-multiselect-checkboxes input {display:none}
+
+/*
+ * default
+ */
+.ui-multiselect-header { margin-bottom:3px; padding:3px 0 3px 4px }
+.ui-multiselect-header ul { font-size:0.9em }
+.ui-multiselect-header a { text-decoration:none }
+.ui-multiselect-header a:hover { text-decoration:underline }
+
+.ui-multiselect-menu { display:none; padding:3px; position:absolute; z-index:10000; overflow: auto; }
+.ui-multiselect-menu-container {}
+.ui-multiselect-checkboxes { position:relative /* fixes bug in IE6/7 */; overflow-x:scroll}
+.ui-multiselect-checkboxes label { cursor:default; display:block; border:1px solid transparent; padding:3px 1px; }
+.ui-multiselect-checkboxes label span { margin:0px 4px;}
+.ui-multiselect-checkboxes label input { position:relative; top:1px }
+.ui-multiselect-checkboxes li { clear:both; font-size:0.9em; padding-right:3px; }
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label { text-align:center; font-weight:bold; border-bottom:1px solid }
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label a { display:block; padding:3px; margin:1px 0; text-decoration:none }
+
+/* remove label borders in IE6 because IE6 does not support transparency */
+* html .ui-multiselect-checkboxes label { border:none }
+
+.ui-multiselect-hasfilter ul { position:relative; top:2px }
+.ui-multiselect-filter {width: 100%;}
+.ui-multiselect-filter input {display: block; margin-left: auto; margin-right: auto; border:1px solid #a6c9e2; -webkit-appearance:textfield; -webkit-box-sizing:content-box; width: 100%;}

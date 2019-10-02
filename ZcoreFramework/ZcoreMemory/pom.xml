@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.zcoreframework.project</groupId>
+		<artifactId>ZcoreProject</artifactId>
+		<version>1.0.0.RELEASE</version>
+	</parent>
+	<groupId>org.zcoreframework.memory</groupId>
+	<artifactId>ZcoreMemory</artifactId>
+	<version>${ZcoreMemory.version}</version>
+	<dependencies>
+		<!-- hazelcast -->
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast-all</artifactId>
+			<version>${com.hazelcast.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- zcore -->
+		<dependency>
+			<groupId>org.zcoreframework.component</groupId>
+			<artifactId>ZcoreComponent</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+</project>

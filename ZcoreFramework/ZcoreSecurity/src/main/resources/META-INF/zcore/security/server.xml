@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Http Session Csrf Token Repository -->
+    <bean id="org.zcoreframework.security.csrf.TokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository"/>
+
+    <!-- authentication handler configuration -->
+
+    <bean id="org.zcoreframework.web.security.AuthenticationDeniedHandler" class="org.zcoreframework.security.web.authentication.AuthenticationDeniedHandlerImpl"/>
+
+    <bean id="org.zcoreframework.web.security.AuthenticationFailureHandler" class="org.zcoreframework.security.web.authentication.AuthenticationFailureHandlerImpl"/>
+
+    <bean id="org.zcoreframework.web.security.AuthenticationLogoutHandler" class="org.zcoreframework.security.web.authentication.AuthenticationLogoutHandlerImpl"/>
+
+    <bean id="org.zcoreframework.web.security.AuthenticationSuccessHandler" class="org.zcoreframework.security.web.authentication.AuthenticationSuccessHandlerImpl">
+        <constructor-arg name="tokenRepository" ref="org.zcoreframework.security.csrf.TokenRepository"/>
+    </bean>
+
+    <!-- org.zcoreframework.security.AuthenticationDAO declare by annotation -->
+
+    <bean id="org.zcoreframework.security.AuthenticationManager" class="org.springframework.security.authentication.ProviderManager">
+        <constructor-arg>
+            <list>
+                <bean class="org.zcoreframework.security.safebox.UserDetailsAuthenticationProviderImpl"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- session authentication strategy -->
+
+    <bean id="org.zcoreframework.security.SessionRegistry" class="org.zcoreframework.security.core.SessionRegistryImpl"/>
+
+    <bean id="org.zcoreframework.security.SessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+        <constructor-arg name="delegateStrategies">
+            <list>
+
+                <!-- concurrent session control authentication strategy -->
+                <bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+                    <constructor-arg name="sessionRegistry" ref="org.zcoreframework.security.SessionRegistry"/>
+                    <property name="maximumSessions" value="1"/>
+                    <property name="exceptionIfMaximumExceeded" value="false"/>
+                </bean>
+
+                <!-- register session authentication strategy -->
+                <bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+                    <constructor-arg name="sessionRegistry" ref="org.zcoreframework.security.SessionRegistry"/>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Authentication Filter Configuration -->
+
+    <bean id="org.zcoreframework.security.filter.AuthenticationFilterImpl" class="org.zcoreframework.security.filter.AuthenticationFilterImpl">
+        <property name="authenticationManager" ref="org.zcoreframework.security.AuthenticationManager"/>
+        <property name="authenticationSuccessHandler" ref="org.zcoreframework.web.security.AuthenticationSuccessHandler"/>
+        <property name="authenticationFailureHandler" ref="org.zcoreframework.web.security.AuthenticationFailureHandler"/>
+        <property name="sessionAuthenticationStrategy" ref="org.zcoreframework.security.SessionAuthenticationStrategy"/>
+        <constructor-arg name="filterProcessesUrl" value="/zcore-login"/>
+    </bean>
+
+    <!-- Captcha Filter Configuration -->
+
+    <bean id="org.zcoreframework.security.filter.CaptchaFilterImpl" class="org.zcoreframework.security.filter.CaptchaFilterImpl">
+        <property name="captchaFailureHandler" ref="org.zcoreframework.web.security.AuthenticationFailureHandler"/>
+        <constructor-arg name="loginUrl" value="/zcore-login"/>
+        <constructor-arg name="captchaUrl" value="/zcore-captcha"/>
+        <constructor-arg name="captchaEnabled" value="${zcore.security.captcha.enabled}"/>
+        <constructor-arg name="captchaTimeout" value="${zcore.security.captcha.timeout}"/>
+        <constructor-arg name="config">
+            <bean class="org.zcoreframework.captcha.util.Config">
+                <constructor-arg type="java.util.Properties">
+                    <props>
+                        <prop key="captcha.textproducer.char.string">${zcore.security.captcha.textproducer.char.string}</prop>
+                        <prop key="captcha.textproducer.char.length">${zcore.security.captcha.textproducer.char.length}</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <!-- Session Filter Configuration -->
+
+    <bean id="org.zcoreframework.security.filter.AuthorizationFilterImpl" class="org.zcoreframework.security.filter.AuthorizationFilterImpl">
+        <constructor-arg name="sessionRegistry" ref="org.zcoreframework.security.SessionRegistry"/>
+        <constructor-arg name="tokenRepository" ref="org.zcoreframework.security.csrf.TokenRepository"/>
+        <constructor-arg name="csrfEnabled" value="${zcore.security.csrf.enabled}"/>
+    </bean>
+
+    <!-- Ticket Filter Configuration -->
+
+    <bean id="org.zcoreframework.security.filter.TicketFilterImpl" class="org.zcoreframework.security.filter.TicketFilterImpl">
+        <constructor-arg name="sessionRegistry" ref="org.zcoreframework.security.SessionRegistry"/>
+        <constructor-arg name="defaultFilterProcessesUrls">
+            <list>
+                <value>/zcore-ticket</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Authentication Entry Point Configuration -->
+    <bean id="org.zcoreframework.security.AuthenticationEntryPoint" class="org.zcoreframework.security.web.authentication.SimpleAuthenticationEntryPoint"/>
+
+    <!-- Security Config -->
+    <security:http pattern="/view/**" security="none"/>
+    <security:http pattern="/resources/**" security="none"/>
+
+    <!-- Security Main Configuration -->
+    <security:http auto-config="false" entry-point-ref="org.zcoreframework.security.AuthenticationEntryPoint"
+                   authentication-manager-ref="org.zcoreframework.security.AuthenticationManager">
+
+        <security:headers>
+            <security:frame-options policy="SAMEORIGIN"/>
+        </security:headers>
+
+        <!-- Cross-Site Request Forgery disabled instead handle in SessionFilterImpl -->
+        <security:csrf disabled="true"/>
+
+        <!-- intercept url -->
+        <security:intercept-url pattern="/index.*" access="permitAll()"/>
+        <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+
+        <!--
+            custom filter if continueChainBeforeSuccessfulAuthentication of AuthenticationFilterImpl
+            is false this filter must be the /zcore-login request captured by FORM_LOGIN_FILTER
+            and it should not captured by any other filters the order of spring
+            security filter chain is really important
+        -->
+
+        <!--
+            - FIRST
+            - CHANNEL_FILTER
+            - SECURITY_CONTEXT_FILTER 1
+            - CONCURRENT_SESSION_FILTER
+            - WEB_ASYNC_MANAGER_FILTER 2
+            - HEADERS_FILTER 3
+            - CSRF_FILTER
+            - LOGOUT_FILTER	4
+            - X509_FILTER
+            - PRE_AUTH_FILTER (user 5, 6)
+            - CAS_FILTER (user 7, 8)
+            - FORM_LOGIN_FILTER
+            - OPENID_FILTER
+            - LOGIN_PAGE_FILTER
+            - DIGEST_AUTH_FILTER
+            - BASIC_AUTH_FILTER
+            - REQUEST_CACHE_FILTER 9
+            - SERVLET_API_SUPPORT_FILTER
+            - JAAS_API_SUPPORT_FILTER 10
+            - REMEMBER_ME_FILTER
+            - ANONYMOUS_FILTER 11
+            - SESSION_MANAGEMENT_FILTER 12
+            - EXCEPTION_TRANSLATION_FILTER 13
+            - FILTER_SECURITY_INTERCEPTOR 14
+            - SWITCH_USER_FILTER
+            - LAST
+        -->
+
+        <security:custom-filter before="CONCURRENT_SESSION_FILTER" ref="org.zcoreframework.security.filter.CaptchaFilterImpl"/>
+        <security:custom-filter position="CONCURRENT_SESSION_FILTER" ref="org.zcoreframework.security.filter.AuthenticationFilterImpl"/>
+        <security:custom-filter position="CSRF_FILTER" ref="org.zcoreframework.security.filter.AuthorizationFilterImpl"/>
+        <security:custom-filter before="LOGOUT_FILTER" ref="org.zcoreframework.security.filter.TicketFilterImpl"/>
+
+        <!-- denied handler -->
+        <security:access-denied-handler ref="org.zcoreframework.web.security.AuthenticationDeniedHandler"/>
+
+        <!-- logout handler -->
+        <security:logout logout-url="/zcore-logout" delete-cookies="JSESSIONID" invalidate-session="true"
+                         success-handler-ref="org.zcoreframework.web.security.AuthenticationLogoutHandler"/>
+
+        <!-- session management -->
+        <security:session-management session-authentication-strategy-ref="org.zcoreframework.security.SessionAuthenticationStrategy"/>
+
+    </security:http>
+
+</beans>

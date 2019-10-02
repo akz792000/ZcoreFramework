@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringBatchModel-->
+<beans:beans xmlns="http://www.springframework.org/schema/batch"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="http://www.springframework.org/schema/batch
+                                 http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+                                 http://www.springframework.org/schema/beans
+                                 http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                                 http://www.springframework.org/schema/context
+                                 http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Scans the classpath of this application for @Components to deploy as beans -->
+    <context:component-scan base-package="org.zcoreframework.batch"/>
+
+    <!-- imports -->
+    <beans:import resource="classpath*:/META-INF/zcore.batch/abstractBatchDefinitions.xml"/>
+
+    <!-- job definitions -->
+    <job id="normalJob" parent="abstractParentJob" restartable="false">
+        <step id="normalStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="normalPartitioner" step="normalPartitionerStep">
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="highConcurrentJob" parent="abstractParentJob" restartable="false">
+        <step id="highConcurrentStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="highConcurrentPartitioner" step="highConcurrentPartitionerStep">
+                <handler grid-size="70"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="lowCountPartitionerJob" parent="abstractParentJob" restartable="false">
+        <step id="lowCountPartitionerStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="lowCountPartitioner" step="normalPartitionerStep">
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="zeroCountPartitionerJob" parent="abstractParentJob" restartable="false">
+        <step id="zeroCountPartitionerStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="zeroCountPartitioner" step="normalPartitionerStep">
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="incorrectMinMaxValuePartitionerJob" parent="abstractParentJob" restartable="false">
+        <step id="incorrectMinMaxValuePartitionerStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="incorrectMinMaxValuePartitioner" step="normalPartitionerStep">
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="nullReturnPartitionerJob" parent="abstractParentJob" restartable="false">
+        <step id="nullReturnPartitionerStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="nullReturnPartitioner" step="normalPartitionerStep">
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="normalLogErrorPartitionerJob" parent="abstractParentJob" restartable="false">
+        <step id="normalLogErrorPartitionerStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="normalLogErrorPartitioner" step="normalPartitionerStep">
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="transactionalPartitionerJob" parent="abstractParentJob" restartable="false">
+        <step id="transactionalPartitionerStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="transactionalPartitioner" step="normalPartitionerStep">
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="failedLogErrorPartitionerJob" parent="abstractParentJob" restartable="false">
+        <step id="failedLogErrorPartitionerStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="failedLogErrorPartitioner" step="normalPartitionerStep">
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="normalLogErrorReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="normalLogErrorReaderStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="normalLogErrorReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="transactionalReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="transactionalReaderStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="transactionalReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="failedLogErrorReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="failedLogErrorReaderStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="failedLogErrorReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="chunkOrientedDefaultItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="chunkOrientedDefaultItemReaderStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="chunkOrientedDefaultItemReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="normalDefaultPartitionedItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="normalDefaultPartitionedItemReaderStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="secondNormalPartitioner">
+                <step parent="abstractParentChunkStep">
+                    <tasklet>
+                        <chunk reader="normalDefaultPartitionedItemReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+                    </tasklet>
+                </step>
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="chunkOrientedDefaultPartitionedItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="chunkOrientedDefaultPartitionedItemReaderStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="secondNormalPartitioner">
+                <step parent="abstractParentChunkStep">
+                    <tasklet>
+                        <chunk reader="chunkOrientedDefaultPartitionedItemReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+                    </tasklet>
+                </step>
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="unsortedReadForDefaultPartitionedItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="unsortedReadForDefaultPartitionedItemReaderStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="secondNormalPartitioner">
+                <step parent="abstractParentChunkStep">
+                    <tasklet>
+                        <chunk reader="unsortedReadForDefaultPartitionedItemReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+                    </tasklet>
+                </step>
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="nullReturnDefaultPartitionedItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="nullReturnDefaultPartitionedItemReaderStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="secondNormalPartitioner">
+                <step parent="abstractParentChunkStep">
+                    <tasklet>
+                        <chunk reader="nullReturnDefaultPartitionedItemReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+                    </tasklet>
+                </step>
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="normalLogErrorDefaultPartitionedItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="normalLogErrorDefaultPartitionedItemReaderStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="secondNormalPartitioner">
+                <step parent="abstractParentChunkStep">
+                    <tasklet>
+                        <chunk reader="normalLogErrorDefaultPartitionedItemReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+                    </tasklet>
+                </step>
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="chunkOrientedLogErrorDefaultPartitionedItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="chunkOrientedLogErrorDefaultPartitionedItemReaderStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="secondNormalPartitioner">
+                <step parent="abstractParentChunkStep">
+                    <tasklet>
+                        <chunk reader="chunkOrientedLogErrorDefaultPartitionedItemReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+                    </tasklet>
+                </step>
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="normalDefaultNamedQueryItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="normalDefaultNamedQueryItemReaderStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="normalDefaultNamedQueryItemReader" processor="normalProcessor" writer="secondNormalWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="chunkOrientedDefaultNamedQueryItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="chunkOrientedDefaultNamedQueryItemReaderStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="chunkOrientedDefaultNamedQueryItemReader" processor="normalProcessor" writer="secondNormalWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="chunkOrientedDefaultPartitionedNamedQueryItemReaderJob" parent="abstractParentJob" restartable="false">
+        <step id="chunkOrientedDefaultPartitionedNamedQueryItemReaderStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="secondNormalPartitioner">
+                <step parent="abstractParentChunkStep">
+                    <tasklet>
+                        <chunk reader="chunkOrientedDefaultPartitionedNamedQueryItemReader" processor="normalProcessor" writer="secondNormalWriter" commit-interval="10"/>
+                    </tasklet>
+                </step>
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <job id="normalLogErrorProcessorJob" parent="abstractParentJob" restartable="false">
+        <step id="normalLogErrorProcessorStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="secondNormalReader" processor="normalLogErrorProcessor" writer="normalWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="transactionalProcessorJob" parent="abstractParentJob" restartable="false">
+        <step id="transactionalProcessorStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="secondNormalReader" processor="transactionalProcessor" writer="normalWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="failedLogErrorProcessorJob" parent="abstractParentJob" restartable="false">
+        <step id="failedLogErrorProcessorStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="secondNormalReader" processor="failedLogErrorProcessor" writer="normalWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="normalLogErrorWriterJob" parent="abstractParentJob" restartable="false">
+        <step id="normalLogErrorWriterStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="secondNormalReader" processor="normalProcessor" writer="normalLogErrorWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="failedLogErrorWriterJob" parent="abstractParentJob" restartable="false">
+        <step id="failedLogErrorWriterStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="secondNormalReader" processor="normalProcessor" writer="failedLogErrorWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="normalDefaultItemWriterJob" parent="abstractParentJob" restartable="false">
+        <step id="normalDefaultItemWriterStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="thirdNormalReader" processor="normalProcessor" writer="normalDefaultItemWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="normalLogErrorDefaultItemWriterJob" parent="abstractParentJob" restartable="false">
+        <step id="normalLogErrorDefaultItemWriterStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="fourthNormalReader" processor="normalProcessor" writer="normalLogErrorDefaultItemWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="failedLogErrorDefaultItemWriterJob" parent="abstractParentJob" restartable="false">
+        <step id="failedLogErrorDefaultItemWriterStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="fourthNormalReader" processor="normalProcessor" writer="failedLogErrorDefaultItemWriter" commit-interval="10"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="normalLogErrorTaskletJob" parent="abstractParentJob" restartable="false">
+        <step id="normalLogErrorTaskletStep" parent="abstractParentTaskletStep">
+            <tasklet ref="normalLogErrorTasklet"/>
+        </step>
+    </job>
+
+    <job id="failedLogErrorTaskletJob" parent="abstractParentJob" restartable="false">
+        <step id="failedLogErrorTaskletStep" parent="abstractParentTaskletStep">
+            <tasklet ref="failedLogErrorTasklet"/>
+        </step>
+    </job>
+
+    <step id="normalPartitionerStep" parent="abstractParentChunkStep">
+        <tasklet>
+            <chunk reader="normalReader" processor="normalProcessor" writer="normalWriter" commit-interval="10"/>
+        </tasklet>
+    </step>
+
+    <step id="highConcurrentPartitionerStep" parent="abstractParentChunkStep">
+        <tasklet>
+            <chunk reader="chunkOrientedDefaultPartitionedNamedQueryItemReader" processor="normalProcessor" writer="secondNormalWriter" commit-interval="10"/>
+        </tasklet>
+    </step>
+
+    <job id="simpleJob" parent="abstractParentJob" restartable="false">
+        <step id="simpleStep" parent="abstractParentChunkStep">
+            <tasklet>
+                <chunk reader="simpleItemReader"
+                       processor="simpleProcessor"
+                       writer="simpleWriter"
+                       commit-interval="10"
+                />
+            </tasklet>
+        </step>
+    </job>
+
+    <job id="simplePartition" parent="abstractParentJob" restartable="false">
+        <step id="masterStep" parent="abstractParentPartitionerStep">
+            <partition partitioner="simplePartitioner">
+                <step parent="abstractParentChunkStep">
+                    <tasklet>
+                        <chunk reader="rangedItemReader" writer="simpleWriter" processor="simpleProcessor" commit-interval="10"/>
+                    </tasklet>
+                </step>
+                <handler grid-size="5"/>
+            </partition>
+        </step>
+    </job>
+
+    <!-- <beans:bean class="org.springframework.scheduling.quartz.SchedulerFactorybeans:bean">
+         <beans:property name="triggers">
+             <beans:bean class="org.springframework.scheduling.quartz.CronTriggerFactorybeans:bean">
+                 <beans:property name="jobDetail" ref="taskJobDetail"/>
+                 <beans:property name="cronExpression" value="*/5 * * * * ?"/>
+             </beans:bean>
+         </beans:property>
+     </beans:bean>-->
+
+    <!--<beans:bean id="schedulerFactory" class="org.zcoreframework.batch.test.scheduler.SchedulerFactory">
+        <beans:property name="jobLauncher" ref="jobLauncher"/>
+        <beans:property name="jobLocator" ref="jobRegistry"/>
+    </beans:bean>
+
+    <beans:bean name="taskJobDetail" class="org.springframework.scheduling.quartz.JobDetailbeans:bean"
+          factory-beans:bean="schedulerFactory" factory-method="create">
+        <constructor-arg value="simpleJob"/>
+    </beans:bean>
+    <beans:bean class="org.springframework.batch.core.configuration.support.JobRegistrybeans:beanPostProcessor">
+        <beans:property name="jobRegistry" ref="jobRegistry"/>
+    </beans:bean>
+
+    <beans:bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry"/>-->
+
+</beans:beans>

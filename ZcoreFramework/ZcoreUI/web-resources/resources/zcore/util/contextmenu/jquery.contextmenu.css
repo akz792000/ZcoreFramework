@@ -1,0 +1,62 @@
+
+.contextMenuPlugin {
+  -webkit-user-select: none;
+  display: none;
+  font-family: tahoma, arial, sans-serif;
+  font-size: 11px;
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  min-width: 100px;
+  list-style-type: none;
+  margin: 0;
+  padding: 4px;  
+}
+
+.contextMenuPlugin > li {
+  margin: 0 0 0 0;
+  padding: 4px;
+  background-repeat: no-repeat;
+  
+}
+
+.contextMenuPlugin > li > a {
+  position: relative;
+  padding: 3px;
+  color: ButtonText;
+  text-decoration: none;
+  margin: 1px;
+}
+
+.contextMenuPlugin > li > a div {
+  margin-top: -2px;
+  
+  float: right;
+}
+
+.contextMenuPlugin > li > a:hover {
+  margin: 0;
+  cursor: default;
+}
+
+.contextMenuPlugin > li.divider {
+  height: 0;
+  padding: 0;
+  margin: 5px 0 5px 27px;
+}
+
+.contextMenuPlugin > .header {
+  position: relative;
+  cursor: default;
+  padding: 3px 3px 3px 3px;
+}
+
+.contextMenuPlugin > .gutterLine {
+  position: absolute;
+  width: 0;
+  top: 0;
+  bottom: 0;
+  right: 26px;
+  z-index: 0;
+}
+

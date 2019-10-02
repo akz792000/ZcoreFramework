@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.zcoreframework.project</groupId>
+		<artifactId>ZcoreProject</artifactId>
+		<version>1.0.0.RELEASE</version>
+	</parent>
+	<groupId>org.zcoreframework.report</groupId>
+	<artifactId>ZcoreReport</artifactId>
+	<version>${ZcoreReport.version}</version>		
+	<dependencies>
+		<!-- zcore -->
+		<dependency>
+			<groupId>org.zcoreframework.base</groupId>
+			<artifactId>ZcoreBase</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- oracle report dependencies -->
+		<dependency>
+			<groupId>javax.xml</groupId>
+			<artifactId>jaxrpc-api</artifactId>
+			<version>1.1</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+		</dependency>
+					
+	</dependencies>
+</project>

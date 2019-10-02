@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns="http://www.zcoreframework.org/schema/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.zcoreframework.org/schema/ui"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<!-- core -->
+
+	<xs:complexType name="validatorItemType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="value" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="email" />
+							<xs:enumeration value="expression" />
+							<xs:enumeration value="length" />
+							<xs:enumeration value="max" />
+							<xs:enumeration value="max.length" />
+							<xs:enumeration value="max.size" />
+							<xs:enumeration value="min" />
+							<xs:enumeration value="min.length" />
+							<xs:enumeration value="min.size" />
+							<xs:enumeration value="not.null" />
+							<xs:enumeration value="not.empty" />
+							<xs:enumeration value="not.blank" />
+							<xs:enumeration value="size" />
+							<xs:enumeration value="range" />
+							<xs:enumeration value="regexp" />
+							<xs:enumeration value="date" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute type="xs:string" name="args" use="optional" />
+				<xs:attribute type="xs:string" name="code" use="optional" />
+				<xs:attribute type="xs:string" name="applyIf" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="validatorsType">
+		<xs:sequence>
+			<xs:element type="validatorItemType" name="item" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="componentType">
+		<xs:attribute type="xs:string" name="id" use="optional" />
+		<xs:attribute type="xs:string" name="value" use="optional" />
+		<xs:attribute type="xs:int" name="height" use="optional" />
+		<xs:attribute type="xs:string" name="width" use="optional" />
+		<xs:attribute name="direction" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="inherit" />
+					<xs:enumeration value="ltr" />
+					<xs:enumeration value="rtl" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute type="xs:boolean" name="disabled" use="optional" default="false" />
+		<xs:attribute type="xs:boolean" name="visible" use="optional" default="true" />
+		<xs:attribute type="xs:int" name="tabindex" use="optional" />
+		<xs:attribute type="xs:string" name="cssClass" use="optional" />
+		<xs:attribute type="xs:string" name="cssStyle" use="optional" />
+		<xs:attribute type="xs:string" name="title" use="optional" />
+		<xs:attribute type="xs:string" name="placeholder" use="optional" />
+		<xs:attribute type="xs:int" name="colspan" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="postableType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:sequence>
+					<xs:element type="validatorsType" name="validators" minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+				<xs:attribute type="xs:boolean" name="readonly" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="post" use="optional" default="true" />
+				<xs:attribute type="xs:int" name="sequence" use="optional" default="0" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- friend -->
+
+	<xs:attributeGroup name="ajaxType">
+		<xs:attribute type="xs:string" name="data" use="optional" />
+		<xs:attribute type="xs:string" name="service" use="optional" />
+		<xs:attribute type="xs:boolean" name="async" use="optional" default="true" />
+		<xs:attribute name="methodType" use="optional" default="GET">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="GET" />
+					<xs:enumeration value="POST" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>		
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="dateType">
+		<xs:attribute type="xs:string" name="format" use="optional" default="yyyy/mm/dd" />
+		<xs:attribute name="dateType" use="optional" default="PERSIAN">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="GREGORIAN" />
+					<xs:enumeration value="PERSIAN" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	
+	<xs:attributeGroup name="lovType">
+		<xs:attribute type="xs:int" name="lovHeight" use="optional" default="200" />
+		<xs:attribute type="xs:int" name="lovWidth" use="optional" default="300" />
+		<xs:attribute type="xs:string" name="valWidth" use="optional" default="0" />
+		<xs:attribute type="xs:int" name="maxlength" use="optional" default="-1" />
+	</xs:attributeGroup>	
+
+	<xs:attributeGroup name="maskType">
+		<xs:attribute type="xs:int" name="realSize" use="optional" default="-1" />
+		<xs:attribute type="xs:int" name="floatSize" use="optional" default="-1" />
+		<xs:attribute type="xs:float" name="max" use="optional" default="-1" />
+		<xs:attribute type="xs:float" name="min" use="optional" default="-1" />
+		<xs:attribute name="mask" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="alphanumeric" />
+					<xs:enumeration value="commaSeparated" />
+					<xs:enumeration value="numeric" />
+					<xs:enumeration value="mask" />
+					<xs:enumeration value="decimal" />
+					<xs:enumeration value="float"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute type="xs:string" name="format" use="optional" />
+		<xs:attribute type="xs:boolean" name="valence" use="optional" default="false" />
+		<xs:attribute type="xs:boolean" name="signature" use="optional" default="false" />
+	</xs:attributeGroup>
+	
+	<xs:attributeGroup name="modalType" />	
+	
+	<xs:attributeGroup name="tableType">
+		<xs:attribute type="xs:int" name="col" use="optional" default="0" />
+	</xs:attributeGroup>	
+
+	<!-- components -->
+
+	<xs:group name="components">
+		<xs:choice>
+			<!-- ajax -->
+			<xs:element type="buttonsetType" name="buttonset" />
+			<xs:element type="calendarType" name="calendar" />
+			<xs:element type="captchaType" name="captcha" />
+			<xs:element type="chosenType" name="chosen" />			
+			<xs:element type="datetimeType" name="datetime" />
+			<xs:element type="gridType" name="grid" />
+			<xs:element type="lovgridType" name="lovgrid" />
+			<xs:element type="lovtreeType" name="lovtree" />
+			<xs:element type="menuType" name="menu" />
+			<xs:element type="multiselectType" name="multiselect" />
+			<xs:element type="treeType" name="tree" />
+			<!-- run -->
+			<xs:element type="accordionType" name="accordion" />
+			<xs:element type="buttonType" name="button" />
+			<xs:element type="checkboxType" name="checkbox" />
+			<xs:element type="fileType" name="file" />
+			<xs:element type="hiddenType" name="hidden" />
+			<xs:element type="imageType" name="image" />
+			<xs:element type="inputType" name="input" />
+			<xs:element type="labelType" name="label" />
+			<xs:element type="panelType" name="panel" />
+			<xs:element type="passwordType" name="password" />
+			<xs:element type="tabType" name="tab" />
+			<xs:element type="textType" name="text" />
+			<xs:element type="textareaType" name="textarea" />
+			<xs:element type="textbtnType" name="textbtn" />	
+			<xs:element type="textlabelType" name="textlabel" />			
+			<xs:element type="toggleType" name="toggle" />
+			<xs:element type="iframeType" name="iframe" />
+			<xs:element type="progressBarType" name="progressBar"/>
+		</xs:choice>
+	</xs:group>
+
+	<!-- ajax -->
+
+	<xs:complexType name="buttonsetType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attributeGroup ref="ajaxType" />
+				<xs:attribute name="align" use="prohibited" />
+				<xs:attribute name="readonly" use="prohibited" />
+				<xs:attribute name="kind" use="optional" default="radio">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="radio" />
+							<xs:enumeration value="checkbox" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="calendarType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attributeGroup ref="ajaxType" />
+				<xs:attributeGroup ref="dateType" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="captchaType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attributeGroup ref="ajaxType" />
+				<xs:attribute type="xs:int" name="maxlength" use="optional" default="-1" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="chosenType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attributeGroup ref="ajaxType" />
+				<xs:attribute name="align" use="prohibited" />
+				<xs:attribute name="readonly" use="prohibited" />
+				<xs:attribute type="xs:string" name="valWidth" use="optional" default="0" />
+				<xs:attribute type="xs:boolean" name="concatenate" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="singleDeselect" use="optional" default="true" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>		
+	
+	<xs:complexType name="datetimeType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attributeGroup ref="ajaxType" />
+				<xs:attributeGroup ref="dateType" />
+				<xs:attributeGroup ref="modalType" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>	
+
+	<xs:complexType name="gridItemType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="caption" use="optional" />
+				<xs:attribute type="xs:string" name="width" use="optional" />
+				<xs:attribute type="xs:string" name="length" use="optional" />
+				<xs:attribute type="xs:boolean" name="filterShow" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="sortShow" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="orderShow" use="optional" default="false" />
+				<xs:attribute type="xs:string" name="filter" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="gridListItemType">
+		<xs:sequence>
+			<xs:element type="gridItemType" name="item" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="gridType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:sequence>
+					<xs:element type="gridListItemType" name="items" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+				<xs:attributeGroup ref="ajaxType" />
+				<xs:attribute name="readonly" use="prohibited" />
+				<xs:attribute type="xs:string" name="limitPageItems" use="optional" />
+				<xs:attribute type="xs:boolean" name="multiSelected" use="optional" default="false" />
+				<xs:attribute name="showNumber" use="optional" default="all">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="page" />
+							<xs:enumeration value="all" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>				
+				<xs:attribute type="xs:string" name="items" use="optional" />
+				<xs:attribute type="xs:boolean" name="refreshShow" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="filterShow" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="sortShow" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="orderShow" use="optional" default="false" />
+				<xs:attribute type="xs:string" name="persistItem" use="optional" />
+				<xs:attribute type="xs:string" name="mergeItem" use="optional" />
+				<xs:attribute type="xs:string" name="removeItem" use="optional" />
+				<xs:attribute type="xs:string" name="viewItem" use="optional" />
+				<xs:attribute type="xs:string" name="orderByItem" use="optional" />
+				<xs:attribute name="orderByItemSort" use="optional" default="asc">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="asc" />
+							<xs:enumeration value="desc" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute type="xs:boolean" name="refreshOnRender" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="clientable" use="optional" default="false" />
+				<xs:attribute type="xs:string" name="filterColumnsValue" use="optional" />
+				<xs:attribute type="xs:boolean" name="contextMenu" use="optional" default="false" />
+				<xs:attribute type="xs:string" name="headerTitle" use="optional" />
+				<xs:attribute type="xs:boolean" name="containerHeaderShow" use="optional" default="true" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="lovgridType">
+		<xs:complexContent>
+			<xs:extension base="gridType">
+				<xs:attributeGroup ref="lovType" />
+				<xs:attributeGroup ref="modalType" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="lovtreeType">
+		<xs:complexContent>
+			<xs:extension base="treeType">
+				<xs:attributeGroup ref="lovType" />
+				<xs:attributeGroup ref="modalType" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="menuType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:attributeGroup ref="ajaxType" />
+				<xs:attribute name="value" use="prohibited" />
+				<xs:attribute name="readonly" use="prohibited" />
+				<xs:attribute name="post" use="prohibited" />
+				<xs:attribute name="sequence" use="prohibited" />
+				<xs:attribute name="validators" use="prohibited" />
+				<xs:attribute type="xs:string" name="inside" use="optional" default="body" />
+				<xs:attribute type="xs:int" name="menuWidth" use="optional" default="180" />
+				<xs:attribute type="xs:int" name="menuHeight" use="optional" default="24" />
+				<xs:attribute type="xs:int" name="showSpeed" use="optional" default="200" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="multiselectType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attributeGroup ref="ajaxType" />
+				<xs:attribute name="align" use="prohibited" />
+				<xs:attribute name="readonly" use="prohibited" />
+				<xs:attribute type="xs:string" name="header" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="multiple" use="optional" default="false" />
+				<xs:attribute type="xs:int" name="listHeight" use="optional" default="100" />
+				<xs:attribute type="xs:int" name="selectedList" use="optional" default="1" />
+				<xs:attribute type="xs:int" name="containerWidth" use="optional" default="0" />
+				<xs:attribute type="xs:boolean" name="checkAllShow" use="optional" default="true" />
+				<xs:attribute type="xs:boolean" name="uncheckAllShow" use="optional" default="true" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="treeType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attributeGroup ref="ajaxType" />
+				<xs:attribute name="readonly" use="prohibited" />
+				<xs:attribute name="category" use="optional" default="crud">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="crud" />
+							<xs:enumeration value="checkbox" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute type="xs:boolean" name="twoState" use="optional" default="false" />
+				<xs:attribute type="xs:boolean" name="oneSelect" use="optional" default="false" />
+				<xs:attribute type="xs:string" name="invisible" use="optional" />
+				<xs:attribute type="xs:boolean" name="completeTitle" use="optional" default="false" />
+				<xs:attribute name="operation" use="optional" default="ALL_CHILDREN">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="SELF" />
+							<xs:enumeration value="CHILDREN" />
+							<xs:enumeration value="ALL_CHILDREN" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute type="xs:string" name="selectingNode" use="optional" default=""/>	
+				<xs:attribute type="xs:int" name="defaultIdVal" use="optional" default="0" />
+				<xs:attribute type="xs:boolean" name="searchShow" use="optional" default="false"/>								
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- run -->
+
+	<xs:complexType name="accordionType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:sequence>
+					<xs:element type="accordionPageType" name="accordionPage" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="tabindex" use="prohibited" />
+				<xs:attribute name="value" use="prohibited" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="accordionPageType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:group ref="components" minOccurs="0" maxOccurs="unbounded" />
+				<xs:attributeGroup ref="tableType" />
+				<xs:attribute name="tabindex" use="prohibited" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="buttonType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:attribute name="direction" use="prohibited" />
+				<xs:attribute type="xs:string" name="primary" use="optional" />
+				<xs:attribute type="xs:string" name="secondary" use="optional" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="checkboxType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attribute name="direction" use="prohibited" />
+				<xs:attribute type="xs:string" name="label" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="fileType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attribute type="xs:int" name="size" use="optional" default="1" />
+				<xs:attribute type="xs:string" name="accept" use="optional" default=".png,.tiff,.pdf,.jpeg,.jpg" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="hiddenType">
+		<xs:complexContent>
+			<xs:extension base="inputType" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="imageType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:attribute name="direction" use="prohibited" />
+				<xs:attribute name="tabindex" use="prohibited" />
+				<xs:attribute name="value" use="prohibited" />
+				<xs:attribute type="xs:string" name="src" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="inputType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attribute type="xs:int" name="maxlength" use="optional" default="-1" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="labelType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:attribute name="tabindex" use="prohibited" />
+				<xs:attribute type="xs:boolean" name="mandatory" use="optional" default="false" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="panelType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:group ref="components" minOccurs="0" maxOccurs="unbounded" />
+				<xs:attributeGroup ref="tableType" />
+				<xs:attribute name="tabindex" use="prohibited" />
+				<xs:attribute name="value" use="prohibited" />
+				<xs:attribute type="xs:string" name="caption" use="optional" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="passwordType">
+		<xs:complexContent>
+			<xs:extension base="inputType" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="tabType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:sequence>
+					<xs:element type="tabPageType" name="tabPage" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="tabindex" use="prohibited" />
+				<xs:attribute name="value" use="prohibited" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="tabPageType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:group ref="components" minOccurs="0" maxOccurs="unbounded" />
+				<xs:attributeGroup ref="tableType" />
+				<xs:attribute name="tabindex" use="prohibited" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="textType">
+		<xs:complexContent>
+			<xs:extension base="inputType">
+				<xs:attributeGroup ref="maskType" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="textareaType">
+		<xs:complexContent>
+			<xs:extension base="inputType" />
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="textbtnType">
+		<xs:complexContent>
+			<xs:extension base="textType">
+				<xs:attribute type="xs:string" name="icon" use="optional" default="" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>		
+	
+	<xs:complexType name="textlabelType">
+		<xs:complexContent>
+			<xs:extension base="textType">
+				<xs:attribute type="xs:string" name="label" use="optional" default="" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>	
+
+	<xs:complexType name="toggleType">
+		<xs:complexContent>
+			<xs:extension base="postableType">
+				<xs:attribute name="direction" use="prohibited" />
+				<xs:attribute type="xs:string" name="primary" use="optional" default="ui-icon-cancel" />
+				<xs:attribute type="xs:string" name="primaryOn" use="optional" default="ui-icon-check" />
+				<xs:attribute type="xs:string" name="caption" use="optional" />
+				<xs:attribute type="xs:string" name="captionOn" use="optional" />
+				<xs:attribute type="xs:string" name="secondary" use="optional" />
+				<xs:attribute type="xs:string" name="secondaryOn" use="optional" />
+				<xs:attribute type="xs:boolean" name="key" use="optional" default="true" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="iframeType">
+		<xs:complexContent>
+			<xs:extension base="componentType">
+				<xs:attribute name="direction" use="prohibited" />
+				<xs:attribute name="tabindex" use="prohibited" />
+				<xs:attribute name="value" use="prohibited" />
+				<xs:attribute type="xs:string" name="src" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>	
+
+	<xs:complexType name="progressBarType">
+		<xs:complexContent>
+			<xs:extension base="componentType"/>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="viewType">
+		<xs:group ref="components" minOccurs="0" maxOccurs="unbounded" />
+	</xs:complexType>
+
+	<!-- zcore -->
+
+	<xs:complexType name="zcoreType">
+		<xs:sequence>
+			<xs:element type="xs:string" name="style" minOccurs="0" maxOccurs="1" />
+			<xs:element type="xs:string" name="script" minOccurs="0" maxOccurs="1" />
+			<xs:element type="viewType" name="view" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="zcore" type="zcoreType" />
+
+</xs:schema>

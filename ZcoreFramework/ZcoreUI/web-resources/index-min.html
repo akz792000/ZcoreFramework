@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />  
+    <script type="text/javascript">
+    var link = document.createElement("link");
+    link.id = 'stylesheet-jqueryui';
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href = 'resources/jquery/themes/:theme/jquery-ui.min.css'.replace(':theme', function() {
+		var keyValue = document.cookie.match('(^|;) ?' + 'ztheme' + '=([^;]*)(;|$)');  
+		return keyValue ? keyValue[2] : 'redmond'; 
+	})
+    document.getElementsByTagName("head")[0].appendChild(link);
+    </script>	     
+	<link id="stylesheet-ui" rel="stylesheet" type="text/css" href="resources/css/redmond/core.css"/>	
+</head>
+<body>
+    <script type="text/javascript" src="resources/jquery/jquery.min.js"></script>	
+    <script type="text/javascript" src="resources/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="resources/zcore/zcore.all.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		// initialize app
+		$.ZAP.initial({
+			version : new Date().getTime(),
+			locale : {
+				cookie : 'zlang'
+			},
+			config : {
+				theme : $.ZCK.cookieObject({
+					cookie : 'ztheme',
+					def : 'redmond',
+					after : function(v) {
+						$('#stylesheet-jqueryui').attr('href', 'resources/jquery/themes/' + this.value + '/jquery-ui.min.css'.replace(':cookie', this.value));
+					}
+				}),	
+				index : function() {
+					$.ZAP.loadView({
+						ui : '/core/view/PL/layout',
+						service : '/core/service/PL_baseData/param'
+					});
+				},
+				login : function() {
+					$.ZAP.loadView({
+						ui : '/core/view/PL/security/login',
+						dialog : {
+							width : 360,
+							dialogClass : 'ui-state-default zui-login',
+							draggable : false,
+							title : $.ZAP.message.msg('Logo title'),
+							closeOnEscape : false,
+							closeButton : false
+						}
+					});	
+				},
+				logout : function() {
+					$.ZAP.call({
+						service : '/core/service/PL_security-authentication/logout',	
+						dataType : "xml",
+						success : function() {				  
+							$.ZAP.removeView();	
+							$.ZAP.config.login();						
+						}
+					});
+				},
+				security : function(state, title) {
+					var view = "password";
+					//--> set view
+					if (state == "SECURITY_USER_MULTI_ORGANIZATIONAL") {
+						view = "organization";
+					}
+					$.ZAP.loadView({
+						ui : {
+							url : '/core/view/PL/security/' + view,
+							param : {
+								state : state
+							}
+						},
+						service : '/core/service/PL_security-:view/param'.replace(':view', view),
+						dialog : {
+							dialogClass : 'ui-state-default',
+							title : title || $.ZAP.message.msg(state),
+							width : 300,
+							closeOnEscape : false,
+							closeButton : false
+						}
+					});					
+				}				
+			}
+		});
+	
+		// go to index page
+		$.ZAP.config.index();
+	});	
+	</script>
+</body>
+</html> 

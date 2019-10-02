@@ -1,0 +1,363 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.zcoreframework.project</groupId>
+	<artifactId>ZcoreProject</artifactId>
+	<version>1.0.0.RELEASE</version>
+	<packaging>pom</packaging>
+	<developers>
+		<developer>
+			<id>akz</id>
+			<name>Ali Karimizandi</name>
+			<email>akz792000@yahoo.com</email>
+			<timezone></timezone>
+			<roles>
+				<role>architect</role>
+			</roles>
+		</developer>
+	</developers>
+	<modules>
+		<module>ZcoreUI</module>
+		<module>ZcoreCaptcha</module>
+		<module>ZcoreValidation</module>
+		<module>ZcoreMapping</module>
+		<module>ZcoreBase</module>
+		<module>ZcoreReport</module>
+		<module>ZcoreMemory</module>
+		<module>ZcoreSecurity</module>
+		<module>ZcoreBPM</module>
+		<module>ZcoreComponent</module>
+		<module>ZcoreWeb</module>
+		<module>ZcoreApplication</module>
+		<!--<module>ZcorePos</module>-->
+		<module>ZcoreBatch</module>
+	</modules>
+	<repositories>
+		<!-- oracle -->
+		<repository>
+			<id>maven.oracle.com</id>
+			<name>oracle-maven-repo</name>
+			<url>https://maven.oracle.com</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<!-- jfrog -->
+		<repository>
+			<id>releases</id>
+			<url>http://tls.navaco.local:9081/artifactory/libs-release</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>snapshots</id>
+			<url>http://tls.navaco.local:9081/artifactory/libs-snapshot</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<!-- oracle -->
+		<pluginRepository>
+			<id>maven.oracle.com</id>
+			<name>oracle-maven-repo</name>
+			<url>https://maven.oracle.com</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<!-- jfrog -->
+		<pluginRepository>
+			<id>releases</id>
+			<url>http://tls.navaco.local:9081/artifactory/plugins-release</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>snapshots</id>
+			<url>http://tls.navaco.local:9081/artifactory/plugins-snapshot</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>tls.navaco.local-releases</name>
+			<url>http://tls.navaco.local:9081/artifactory/libs-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>tls.navaco.local-snapshots</name>
+			<url>http://tls.navaco.local:9081/artifactory/libs-snapshot-local</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<properties>
+		<!-- main version -->
+		<main.version>4.2.5</main.version>
+		
+		<!-- RELEASE | SNAPSHOT -->
+		<main.revision>BUILD-RELEASE</main.revision>
+ 		
+		<!-- version of modules -->
+		<ZcoreUI.version>${main.version}-${main.revision}</ZcoreUI.version>
+		<ZcoreCaptcha.version>${main.version}-${main.revision}</ZcoreCaptcha.version>
+		<ZcoreValidation.version>${main.version}-${main.revision}</ZcoreValidation.version>
+		<ZcoreMapping.version>${main.version}-${main.revision}</ZcoreMapping.version>
+		<ZcoreBase.version>${main.version}-${main.revision}</ZcoreBase.version>
+		<ZcoreReport.version>${main.version}-${main.revision}</ZcoreReport.version>
+		<ZcoreMemory.version>${main.version}-${main.revision}</ZcoreMemory.version>
+		<ZcoreSecurity.version>${main.version}-${main.revision}</ZcoreSecurity.version>
+		<ZcoreBPM.version>${main.version}-${main.revision}</ZcoreBPM.version>
+		<ZcoreComponent.version>${main.version}-${main.revision}</ZcoreComponent.version>
+		<ZcoreWeb.version>${main.version}-${main.revision}</ZcoreWeb.version>
+		<ZcoreApplication.version>${main.version}-${main.revision}</ZcoreApplication.version>
+		<ZcoreBatch.version>${main.version}-${main.revision}</ZcoreBatch.version>
+		<ZcorePos.version>${main.version}-${main.revision}</ZcorePos.version>
+
+		<!-- Generic properties -->
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- junit -->
+		<junit.version>4.12</junit.version>
+		<jmockit.version>1.32</jmockit.version>
+
+		<!-- H2 -->
+		<h2.version>1.4.191</h2.version>
+
+		<!-- spring framework -->
+		<org.springframework.version>4.3.2.RELEASE</org.springframework.version>
+		<org.springsecurity.version>4.1.3.RELEASE</org.springsecurity.version>
+		<org.springbatch.version>3.0.7.RELEASE</org.springbatch.version>
+
+		<!-- commons -->
+		<commons.lang.version>2.6</commons.lang.version>
+		<commons.io.version>2.4</commons.io.version>
+		<commons.fileupload.version>1.2.2</commons.fileupload.version>
+		<commons.collections.version>3.2.1</commons.collections.version>
+		<commons.codec.version>1.9</commons.codec.version>
+		<commons.discovery.version>0.4</commons.discovery.version>
+		<commons.dbcp.version>1.4</commons.dbcp.version>
+
+        <!-- apache common -->
+        <org.apache.commons.csv>1.5</org.apache.commons.csv>
+        <org.apache.commons.net>3.3</org.apache.commons.net>
+
+		<!-- eclipselink -->
+		<org.eclipselink.version>2.6.2</org.eclipselink.version>
+		
+		<!-- oracle -->
+		<com.oracle.version>11.2.0.4</com.oracle.version>
+
+		<!-- jackson -->
+		<org.jackson.version>2.6.0</org.jackson.version>
+
+		<!-- ibm icu -->
+		<com.ibm.icu.version>59.1</com.ibm.icu.version>
+
+		<!-- servlet -->
+		<javax.servlet.api>3.0.1</javax.servlet.api>
+		<javax.servlet.jsp>2.1</javax.servlet.jsp>
+		<javax.servlet.jstl>1.2</javax.servlet.jstl>
+
+		<!-- hazelcast -->
+		<com.hazelcast.version>3.6.4</com.hazelcast.version>
+		
+		<!-- aspectj -->
+		<org.aspectj.version>1.8.2</org.aspectj.version>
+		
+		<!-- log4j -->
+		<log4j.version>1.2.17</log4j.version>
+		<org.slf4j.version>1.7.5</org.slf4j.version>
+
+		<!-- camunda -->
+		<camunda.version>7.7.0</camunda.version>
+
+        <!-- apache http components -->
+        <org.apache.httpcomponents>4.5.2</org.apache.httpcomponents>
+
+        <!-- apache cxf -->
+        <apache.cxf>3.1.8</apache.cxf>
+
+        <!-- jaxp ri -->
+        <jaxp.ri>1.4.5</jaxp.ri>
+
+        <!-- quartz-scheduler -->
+        <org.quartz-scheduler.version>2.2.3</org.quartz-scheduler.version>
+
+        <!-- codehaus groovy -->
+        <org.codehaus.groovy>2.1.6</org.codehaus.groovy>
+
+	</properties>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<compilerArgument>-Xlint:all</compilerArgument>
+						<showWarnings>true</showWarnings>
+						<showDeprecation>true</showDeprecation>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.4</version>
+					<configuration>
+						<includeEmptyDirs>true</includeEmptyDirs>
+					</configuration>					
+				</plugin>				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.4</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.4</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<excludePackageNames>org.zcoreframework.base.calendar.icu:org.zcoreframework.captcha:org.zcoreframework.report.oracle.xmlns.oxp.service.PublicReportService:org.zcoreframework.web.http.converter</excludePackageNames>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+            <!--
+            <plugin>
+                <groupId>ch.fortysix</groupId>
+                <artifactId>maven-postman-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>send a mail</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>send-mail</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <from>${email.username}</from>
+                            <subject>تغییرات جدید در فریم ورک</subject>
+                            <mailport>587</mailport>
+                            <failonerror>false</failonerror>
+                            <mailuser>${email.username}</mailuser>
+                            <mailpassword>${email.password}</mailpassword>
+                            <mailhost>mail.navaco.ir</mailhost>
+                            <receivers>
+                                <receiver>a.molaee@navaco.ir</receiver>
+                                <receiver>haghighat@navaco.ir</receiver>
+                                <receiver>s.rokni@navaco.ir</receiver>
+                                <receiver>z.azadi@navaco.ir</receiver>
+                                <receiver>adibi@navaco.ir</receiver>
+                                <receiver>e.sadeghi@navaco.ir</receiver>
+                                <receiver>a.vesalian@navaco.ir</receiver>
+                                <receiver>farid@navaco.ir</receiver>
+                                <receiver>a.ebrahimi@navaco.ir</receiver>
+                                <receiver>a.zandi@navaco.ir</receiver>
+                                <receiver>m.hoseinnejad@navaco.ir</receiver>
+                            </receivers>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${basedir}/src</directory>
+                                    <includes>
+                                        <include>**/buildReport.txt</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                            <htmlMessage>
+                                <![CDATA[
+								  <p><b>Zcore Framework</b> Build Report.</p>
+                                  <p>Please download the attached file.</p>
+                                  <p>Build by maven plugin.</p>
+                                ]]>
+                            </htmlMessage>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+		</plugins>
+	</build>		
+</project>

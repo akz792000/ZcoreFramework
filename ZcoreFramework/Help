@@ -1,0 +1,69 @@
+mvn commands:
+
+	clean
+	install
+	compile
+	deploy
+
+	clean source:jar install
+	clean compile deploy
+	
+	pl: project list
+	am: append module
+	
+	clean source:jar install -pl ZcoreBase
+	clean source:jar install -pl ZcoreBase -am
+	
+
+	clean source:jar install -Dmain.version=1.1.2 -Dmain.revision=RC1
+	clean source:jar install -pl ZcoreBase -am -Dmain.version=1.1.2 -Dmain.revision=RC1
+	
+	artifactory: jfrog
+	deploy -Dusername=admin -Dpassword=password
+	
+	
+	Build Maven Project Without Running Unit Tests
+	mvn -Dmaven.test.skip=true install
+	
+	
+	clean -Dmaven.test.skip=true deploy
+	
+	clean -Dmaven.test.skip=true source:jar deploy
+
+	clean compile war:war source:jar
+
+
+1)set main.version
+2)set main.revision to BUILD-SNAPSHOT
+3)change your code and build
+4)when you want to get your artifact to developer do the folloeings:
+4.1)increase main.version
+4.2)change main.revision to BUILD-RELEASE
+4.3)deploy artifacts
+4.4)change main.revision to BUILD-SNAPSHOT again	
+
+
+to download source of jar file with maven plugin
+
+<project>
+    ...
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                    <downloadJavadocs>true</downloadJavadocs>
+                    ...
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    ...
+</project>
+
+This works using Eclipse, otherwise you can do this on the command line:
+
+# mvn dependency:sources
+# mvn dependency:resolve -Dclassifier=javadoc

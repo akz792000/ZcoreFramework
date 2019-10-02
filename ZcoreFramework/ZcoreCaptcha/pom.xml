@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.zcoreframework.project</groupId>
+		<artifactId>ZcoreProject</artifactId>
+		<version>1.0.0.RELEASE</version>
+	</parent>
+	<groupId>org.zcoreframework.captcha</groupId>
+	<artifactId>ZcoreCaptcha</artifactId>
+	<version>${ZcoreCaptcha.version}</version>
+	<properties>
+		<!-- jhlabs -->
+		<com.jhlabs.version>2.0.235-1</com.jhlabs.version>
+	</properties>
+	<dependencies>
+		<!-- jhlabs -->
+		<dependency>
+			<groupId>com.jhlabs</groupId>
+			<artifactId>filters</artifactId>
+			<version>${com.jhlabs.version}</version>
+		</dependency>
+	</dependencies>
+</project>

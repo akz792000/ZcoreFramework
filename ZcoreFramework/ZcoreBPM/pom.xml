@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.zcoreframework.project</groupId>
+		<artifactId>ZcoreProject</artifactId>
+		<version>1.0.0.RELEASE</version>
+	</parent>
+	<groupId>org.zcoreframework.bpm</groupId>
+	<artifactId>ZcoreBPM</artifactId>
+	<version>${ZcoreBPM.version}</version>
+	<dependencies>
+		<!-- spring framework -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>	
+		<!-- camunda -->
+		<dependency>
+			<groupId>org.camunda.bpm</groupId>
+			<artifactId>camunda-engine</artifactId>
+			<version>${camunda.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.camunda.bpm</groupId>
+			<artifactId>camunda-engine-spring</artifactId>
+			<version>${camunda.version}</version>
+		</dependency>
+		<!-- oracle database driver -->
+		<dependency>
+			<groupId>com.oracle.jdbc</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>${com.oracle.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.oracle.jdbc</groupId>
+					<artifactId>xmlparserv2</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.jdbc</groupId>
+			<artifactId>ucp</artifactId>
+			<version>${com.oracle.version}</version>
+		</dependency>
+        <!-- codehaus groovy -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>${org.codehaus.groovy}</version>
+        </dependency>
+		<!-- zcore -->
+		<dependency>
+			<groupId>org.zcoreframework.base</groupId>
+			<artifactId>ZcoreBase</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.zcoreframework.security</groupId>
+			<artifactId>ZcoreSecurity</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.zcoreframework.web</groupId>
+			<artifactId>ZcoreWeb</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>		
+	</dependencies>
+</project>

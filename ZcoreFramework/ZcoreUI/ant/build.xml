@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<project name="compressor" default="build.all" basedir=".">
+
+	<property name="target.dest" value="../src/main/resources/META-INF/web-resources" />
+	
+	<property name="web.src" value="../web-resources" />
+	<property name="web.dest" value="build/web-resources" />
+	
+	<property name="src" value="${web.src}/resources" />
+	<property name="dest" value="${web.dest}/resources" />
+	
+	<available property="ant-jsch.present" file="${ant.home}/lib/ant-jsch.jar" />
+	<fail if="ant-jsch.present" message="Please remove ant-jsch.jar from ANT_HOME/lib see [http://ant.apache.org/faq.html#delegating-classloader] ${ant.home}/lib/ant-jsch.jar" />
+
+	<path id="jsch.path">
+		<pathelement location="lib/ant-jsch.jar" />
+		<pathelement location="lib/jsch-0.1.48.jar" />
+	</path>
+  
+	<target name="init">
+		<echo message="${java.home}" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="lib/ant-contrib-1.0b3.jar" />
+		<taskdef name="scp" classname="org.apache.tools.ant.taskdefs.optional.ssh.Scp" classpathref="jsch.path" />
+		<taskdef name="sshexec" classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec" classpathref="jsch.path" />
+	</target>
+
+	<target name="clean">
+		<echo message="${web.dest}" />
+		<delete dir="${web.dest}" />
+		
+		<echo message="${target.dest}" />
+		<delete dir="${target.dest}" />		
+	</target>
+ 
+	<target name="compress">
+		<property name="in" value="${compress.file}" />
+		<condition property="compress.regexp.set">
+			<isset property="compress.regexp" />
+		</condition>
+		<if>
+			<equals arg1="${compress.regexp.set}" arg2="true" />
+			<then>
+				<propertyregex property="out" input="${compress.file}" regexp="${compress.regexp}" replace="${compress.replace}" />
+			</then>
+		</if>
+		<echo message="${in}" />
+		<java jar="lib/yuicompressor-2.4.7.jar" fork="true">
+			<arg file="${in}" />
+			<arg value="-o" />
+			<arg file="${out}" />
+			<arg value="--charset" />
+			<arg value="utf-8" />
+		</java>
+	</target>
+
+	<target name="compress.dir">
+		<foreach target="compress" param="compress.file" inheritall="true" inheritrefs="true">
+			<path>
+				<fileset dir="${compress.path}" includes="${compress.includes}" excludes="${compress.excludes}" />
+			</path>
+		</foreach>
+	</target>
+
+	<target name="concat.dir">
+		<!-- concat & delete -->
+		<for param="filename">
+			<path>
+				<fileset dir="${dest.path}" includes="${dest.includes}" excludes="${dest.excludes}" />
+			</path>
+			<sequential>
+				<echo>Concat files @{filename} </echo>
+				<concat destfile="${dest.path}/${dest.output}" fixlastline="true" append="true" encoding="utf-8" outputencoding="utf-8">
+					<fileset file="@{filename}" />
+				</concat>
+				<delete>
+					<fileset file="@{filename}" />
+				</delete>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="concat.files">
+		<!-- concat & delete -->
+		<for param="filename" list="${dest.includes}">
+			<sequential>
+				<var name="file" value="${dest.path}/${prefix}.@{filename}.${postfix}" />
+				<echo>Concat ${file} </echo>
+				<concat destfile="${dest.path}/${dest.output}" fixlastline="true" append="true" encoding="utf-8" outputencoding="utf-8">
+					<fileset file="${file}" />
+				</concat>
+				<delete>
+					<fileset file="${file}" />
+				</delete>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="build.all" depends="clean, init">
+
+		<!-- ========== copy ========== -->
+
+		<copy todir="${dest}/css">
+			<fileset dir="${src}/css" />
+		</copy>
+
+		<copy file="${src}/jquery/jquery.min.js" tofile="${dest}/jquery/jquery.min.js" />
+		<copy todir="${dest}/jquery/themes">
+			<fileset dir="${src}/jquery/themes" />
+		</copy>
+		<copy file="${src}/jquery/jquery-ui.min.js" tofile="${dest}/jquery/jquery-ui.min.js" />
+
+		<copy todir="${dest}">
+			<fileset dir="${src}" />
+		</copy>
+
+		<!-- ========== compress ========== -->
+		<antcall target="compress.dir">
+			<param name="compress.path" value="${dest}" />
+			<param name="compress.includes" value="**/*.js,**/*.css" />
+			<param name="compress.excludes" value="**/*.min.*" />
+			<param name="compress.regexp" value="" />
+			<param name="compress.replace" value="" />
+		</antcall>		
+
+		<!-- ========== calendar ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/util/calendar" />
+			<param name="prefix" value="jquery" />
+			<param name="dest.includes" value="calendars,calendars.plus,calendars.persian,calendars.persian-fa" />
+			<param name="postfix" value="min.js" />
+			<param name="dest.output" value="../../zcore.all.js" />
+		</antcall>
+
+		<!-- ========== contextmenu ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/util/contextmenu" />
+			<param name="prefix" value="jquery" />
+			<param name="dest.includes" value="contextmenu" />
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="../../zcore.all.js" />
+		</antcall>
+		
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/util/contextmenu" />
+			<param name="prefix" value="jquery" />
+			<param name="dest.includes" value="contextmenu" />
+			<param name="postfix" value="css" />
+			<param name="dest.output" value="../../../css/redmond/core.css" />
+		</antcall>	
+
+		<!-- ========== critical ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/util" />
+			<param name="prefix" value="zcore" />
+			<param name="dest.includes" value="json,validation,browser,mask,clock,cookie" />
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="../zcore.all.js" />
+		</antcall>
+
+		<!-- ========== core resources ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/run/core" />
+			<param name="prefix" value="zcore" />
+			<param name="dest.includes" value="object.factory,object,action,method,property,component,postable" />
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="../../zcore.all.js" />
+		</antcall>
+
+		<!-- ========== friend resources ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/run/friend" />
+			<param name="prefix" value="zcore" />
+			<param name="dest.includes" value="mask,ajax,lov,modal,date,table" />
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="../../zcore.all.js" />
+		</antcall>
+
+		<!-- ========== simple components ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/run" />
+			<param name="prefix" value="zcore" />
+			<param name="dest.includes"
+				   value="label,input,text,textbtn,textlabel,hidden,password,textarea,button,panel,image,accordion,accordionPage,tab,tabPage,view,checkbox,toggle,file,iframe,progressBar"/>
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="../zcore.all.js" />
+		</antcall>
+
+		<!-- ========== ajax components ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/run/ajax" />
+			<param name="prefix" value="zcore" />
+			<param name="dest.includes" value="captcha,menu,buttonset,multiselect,calendar,datetime,tree,lovtree,grid,lovgrid,chosen" />
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="../../zcore.all.js" />
+		</antcall>
+
+		<!-- ========== invoker ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/invoker" />
+			<param name="prefix" value="zcore" />
+			<param name="dest.includes" value="grid,tree" />
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="../zcore.all.js" />
+		</antcall>
+
+		<!-- ========== helper ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore/helper" />
+			<param name="prefix" value="zcore" />
+			<param name="dest.includes" value="message,loading,box,bar,hint,dialog,download" />
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="../zcore.all.js" />
+		</antcall>
+
+		<!-- ========== app ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore" />
+			<param name="prefix" value="zcore" />
+			<param name="dest.includes" value="app" />
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="zcore.all.js" />
+		</antcall>
+		
+		<!-- ========== common ========== -->
+
+		<antcall target="concat.files">
+			<param name="dest.path" value="${dest}/zcore" />
+			<param name="prefix" value="zcore" />
+			<param name="dest.includes" value="common" />
+			<param name="postfix" value="js" />
+			<param name="dest.output" value="zcore.all.js" />
+		</antcall>		
+
+		<!-- ========== remove ========== -->
+
+		<delete>
+			<dirset dir="${dest}/zcore" />
+		</delete>
+
+		<!-- ========== finalize ========== -->
+
+		<replaceregexp match="([\r\n])*/\*.+?\*/([\r\n])*" replace="" flags="gs" byline="false">
+			<fileset dir="${dest}" includes="**/*.js, **/*.css" />
+		</replaceregexp>
+
+		<copy file="${web.src}/index-min.html" tofile="${web.dest}/index.html" />
+		
+		<copy todir="${target.dest}">
+			<fileset dir="${dest}" />
+		</copy>
+
+		<scp todir="zcore:zcore@tls.navaco.local:/home/zcore" trust="true">
+			<fileset dir="build" />
+		</scp>
+
+	</target>
+
+</project>

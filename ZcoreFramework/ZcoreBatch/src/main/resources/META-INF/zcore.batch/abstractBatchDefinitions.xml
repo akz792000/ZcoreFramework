@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringModelInspection-->
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.springframework.org/schema/batch"
+             xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		">
+
+    <job id="abstractParentJob" restartable="false" job-repository="jobRepository" abstract="true"/>
+
+    <step id="abstractParentPartitionerStep" abstract="true">
+        <partition partitioner="abstractParentPartitioner" step="abstractParentChunkStep">
+            <handler task-executor="taskExecutor"/>
+        </partition>
+    </step>
+
+    <step id="abstractParentChunkStep" abstract="true">
+        <tasklet transaction-manager="org.zcoreframework.base.transactionManager">
+            <chunk skip-policy="defaultSkipPolicy"/>
+            <listeners>
+                <listener ref="customStepListener"/>
+            </listeners>
+        </tasklet>
+    </step>
+
+    <step id="abstractParentTaskletStep" abstract="true">
+        <tasklet transaction-manager="org.zcoreframework.base.transactionManager">
+            <listeners>
+                <listener ref="customStepListener"/>
+            </listeners>
+        </tasklet>
+    </step>
+
+    <beans:bean id="customStepListener" class="org.zcoreframework.batch.listener.CustomStepListener">
+        <beans:property name="business">
+            <beans:bean class="org.zcoreframework.batch.business.StepLogBusinessImpl"/>
+        </beans:property>
+    </beans:bean>
+
+</beans:beans>

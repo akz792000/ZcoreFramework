@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress UnparsedCustomBeanInspection-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:base="http://www.zcoreframework.org/schema/base"
+       xmlns:web="http://www.zcoreframework.org/schema/web"
+       xmlns:security="http://www.zcoreframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                                 http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                                 http://www.zcoreframework.org/schema/base
+                                 http://www.zcoreframework.org/schema/base/zcore-base.xsd
+                                 http://www.springframework.org/schema/context
+                                 http://www.springframework.org/schema/context/spring-context.xsd
+                          		 http://www.zcoreframework.org/schema/web
+                          		 http://www.zcoreframework.org/schema/web/zcore-web.xsd
+		                         http://www.zcoreframework.org/schema/security
+		                         http://www.zcoreframework.org/schema/security/zcore-security.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="org.zcoreframework.web.test"/>
+
+    <!-- base configuration -->
+    <base:context/>
+
+    <!-- base context -->
+    <base:data-access/>
+
+    <!-- zcore transaction template -->
+    <base:transaction-template propagation="REQUIRES_NEW"/>
+
+    <!-- soap controller -->
+    <web:soap/>
+
+    <security:client>
+        <security:filter>
+            <list>
+                <value>/service/ZC_sampleSoapService/login</value>
+            </list>
+        </security:filter>
+        <security:service>
+            <list>
+                <value>/service/ZC_sampleSoapService/logout</value>
+            </list>
+        </security:service>
+    </security:client>
+
+    <!-- For connecting unit tests to oracle database, comment this and configure 'config.properties' file -->
+    <import resource="classpath:META-INF/h2Config.xml"/>
+
+</beans>
